@@ -1,9 +1,11 @@
 package com.example.sfy_provaseleccio.model;
 
-public class UrlModel {
+import java.io.Serializable;
+
+public class FlowerUrl implements Serializable {
     private String regular;
 
-    public UrlModel(String regular){
+    public FlowerUrl(String regular) {
         this.regular = regular;
     }
 
