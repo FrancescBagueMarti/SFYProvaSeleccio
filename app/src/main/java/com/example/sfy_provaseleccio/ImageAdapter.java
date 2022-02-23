@@ -27,6 +27,16 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         this.list = list;
     }
 
+    public class ImageViewHolder extends RecyclerView.ViewHolder {
+
+        ImageView imageView;
+
+        public ImageViewHolder(@NonNull @NotNull View itemView) {
+            super(itemView);
+            imageView = itemView.findViewById(R.id.imageView);
+        }
+    }
+
     @NonNull
     @org.jetbrains.annotations.NotNull
     @Override
@@ -54,13 +64,4 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         return list.size();
     }
 
-    public class ImageViewHolder extends RecyclerView.ViewHolder {
-
-        ImageView imageView;
-
-        public ImageViewHolder(@NonNull @NotNull View itemView) {
-            super(itemView);
-            imageView = itemView.findViewById(R.id.imageView);
-        }
-    }
 }

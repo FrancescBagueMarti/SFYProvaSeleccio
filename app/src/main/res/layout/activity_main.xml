@@ -8,11 +8,9 @@
     tools:context=".MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/flowerList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="8dp"
-        android:layout_marginHorizontal="4dp"
-        android:id="@+id/recyclerView"/>
+        android:layout_margin="20dp"/>
 
 </RelativeLayout>

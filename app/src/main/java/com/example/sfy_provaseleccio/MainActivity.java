@@ -4,16 +4,22 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.sfy_provaseleccio.api.ApiInterface;
 import com.example.sfy_provaseleccio.api.ApiUtilities;
+import com.example.sfy_provaseleccio.api.MyApi;
+import com.example.sfy_provaseleccio.model.Flower;
+import com.example.sfy_provaseleccio.model.FlowerList;
 import com.example.sfy_provaseleccio.model.ImageModel;
 import com.example.sfy_provaseleccio.model.SearchModel;
 import com.unsplash.pickerandroid.photopicker.UnsplashPhotoPicker;
@@ -26,131 +32,72 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private ArrayList<ImageModel> list;
-    private GridLayoutManager manager;
-    private ImageAdapter adapter;
-    private int page = 1;
-    private ProgressDialog dialog;
+    public static final String API_URL = "https://api.unsplash.com/";
+    public static final String ACCESS_KEY = "1kLtQJF4l-FvQ0JxZbcmicmn6qPRRsqeL9IFz_Mj6r4";
 
-    private int pageSize= 30;
-    private boolean isLoading ;
-    private boolean isLastPage;
+    RecyclerView recycler;
+    ArrayList<Flower> searchedFlowersList;
+    FlowerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView = findViewById(R.id.recyclerView);
-        list = new ArrayList<>();
-        adapter = new ImageAdapter(this, list);
-        manager = new GridLayoutManager(this, 4);
-        recyclerView.setLayoutManager(manager);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(adapter);
+        recycler = findViewById(R.id.flowerList);
+        if (searchedFlowersList == null) {
+            searchedFlowersList = new ArrayList<>();
+            searchFlowers("flowers");
+        }
 
-        dialog = new ProgressDialog(this);
-        dialog.setMessage("Loading ...");
-        dialog.setCancelable(false);
-        dialog.show();
+        adapter = new FlowerAdapter(searchedFlowersList);
+        recycler.setHasFixedSize(true);
+        recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recycler.setAdapter(adapter);
 
-        getData();
-
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        adapter.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onScrollStateChanged(@NonNull @NotNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
+            public void onClick(View view) {
+                Flower flower = searchedFlowersList
+                        .get(recycler.getChildAdapterPosition(view));
+
+                Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+                intent.putExtra(DetailActivity.FLOWER, flower);
+                startActivity(intent);
             }
+        });
+    }
+    public void searchFlowers(String query) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(API_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
+        MyApi flowerApi  = retrofit.create(MyApi.class);
+
+        Call<FlowerList> flowersCall = flowerApi.searchImages(query, MainActivity.ACCESS_KEY);
+        flowersCall.enqueue(new Callback<FlowerList>() {
             @Override
-            public void onScrolled(@NonNull @NotNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                int visibleItem = manager.getChildCount();
-                int totalItem = manager.getItemCount();
-                int firstVisibleItemPos = manager.findFirstVisibleItemPosition();
-
-                if (!isLoading && !isLastPage) {
-                    if ((visibleItem+firstVisibleItemPos <= totalItem)
-                    && firstVisibleItemPos <= 0 &&
-                    totalItem <= pageSize) {
-                        page++;
-                        getData();
-                    }
-
+            public void onResponse(Call<FlowerList> call, Response<FlowerList> response) {
+                if (response.isSuccessful()) {
+                    updateFlowersData(response.body().getSearchResults());
                 }
             }
-        });
-    }
-
-    private void getData() {
-        isLoading = true;
-        ApiUtilities.getApiInterface().getImages(page, 30)
-                .enqueue(new Callback<List<ImageModel>>() {
-                    @Override
-                    public void onResponse(Call<List<ImageModel>> call, Response<List<ImageModel>> response) {
-                        if (response.body() != null) {
-                            list.addAll(response.body());
-                            adapter.notifyDataSetChanged();
-                        }
-                        isLoading = false;
-                        dialog.dismiss();
-
-                        if (list.size() > 0) {
-                            isLastPage = list.size() < pageSize;
-                        } else {
-                            isLastPage = true;
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<ImageModel>> call, Throwable t) {
-
-                        dialog.dismiss();
-                        Toast.makeText(MainActivity.this, "Error: "+t.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.option_menu, menu);
-        MenuItem search = menu.findItem(R.id.search);
-        SearchView searchView = (SearchView) search.getActionView();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                dialog.show();
-                searchData(query);
-                return true;
-            }
 
             @Override
-            public boolean onQueryTextChange(String query) {
-                return false;
+            public void onFailure(Call<FlowerList> call, Throwable t) {
+
             }
         });
-        return true;
     }
-
-    private void searchData(String query) {
-        ApiUtilities.getApiInterface().searchImage(query)
-                .enqueue(new Callback<SearchModel>() {
-                    @Override
-                    public void onResponse(Call<SearchModel> call, Response<SearchModel> response) {
-                        list.clear();
-                        list.addAll(response.body().getResults());
-                        adapter.notifyDataSetChanged();
-                        dialog.dismiss();
-                    }
-
-                    @Override
-                    public void onFailure(Call<SearchModel> call, Throwable t) {
-
-                    }
-                });
+    public void updateFlowersData(ArrayList<Flower> images) {
+        this.searchedFlowersList.clear();
+        this.searchedFlowersList.addAll(images);
+        adapter.notifyDataSetChanged();
     }
 }

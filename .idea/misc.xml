@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/cep.CEPNET0/Desktop/Projecte Practiques/SFYProvaSeleccio/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/cep.CEPNET0/Desktop/Projecte Practiques/SFYProvaSeleccio/app/src/main/res/layout/activity_detail.xml" value="0.22" />
+        <entry key="..\:/Users/cep.CEPNET0/Desktop/Projecte Practiques/SFYProvaSeleccio/app/src/main/res/layout/activity_full_image.xml" value="0.17831813576494426" />
+        <entry key="..\:/Users/cep.CEPNET0/Desktop/Projecte Practiques/SFYProvaSeleccio/app/src/main/res/layout/activity_main.xml" value="0.15" />
+        <entry key="..\:/Users/cep.CEPNET0/Desktop/Projecte Practiques/SFYProvaSeleccio/app/src/main/res/layout/image_item.xml" value="0.1" />
         <entry key="..\:/Users/cep.CEPNET0/Desktop/Projecte Practiques/SFYProvaSeleccio/app/src/main/res/layout/image_item_layout.xml" value="0.1" />
       </map>
     </option>
