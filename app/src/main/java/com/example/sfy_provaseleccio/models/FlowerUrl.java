@@ -1,4 +1,4 @@
-package com.example.sfy_provaseleccio.model;
+package com.example.sfy_provaseleccio.models;
 
 import java.io.Serializable;
 

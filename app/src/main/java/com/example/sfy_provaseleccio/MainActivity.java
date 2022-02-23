@@ -1,33 +1,18 @@
 package com.example.sfy_provaseleccio;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
-import com.example.sfy_provaseleccio.api.ApiInterface;
-import com.example.sfy_provaseleccio.api.ApiUtilities;
 import com.example.sfy_provaseleccio.api.MyApi;
-import com.example.sfy_provaseleccio.model.Flower;
-import com.example.sfy_provaseleccio.model.FlowerList;
-import com.example.sfy_provaseleccio.model.ImageModel;
-import com.example.sfy_provaseleccio.model.SearchModel;
-import com.unsplash.pickerandroid.photopicker.UnsplashPhotoPicker;
-
-import org.jetbrains.annotations.NotNull;
+import com.example.sfy_provaseleccio.models.Flower;
+import com.example.sfy_provaseleccio.models.FlowerList;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -85,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<FlowerList> call, Response<FlowerList> response) {
                 if (response.isSuccessful()) {
-                    updateFlowersData(response.body().getSearchResults());
+                    updateFlowersData(response.body().getResults());
                 }
             }
 

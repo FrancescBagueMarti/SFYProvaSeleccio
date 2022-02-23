@@ -1,13 +1,10 @@
 package com.example.sfy_provaseleccio.api;
 
-import com.example.sfy_provaseleccio.model.Flower;
-import com.example.sfy_provaseleccio.model.FlowerList;
+import com.example.sfy_provaseleccio.models.FlowerList;
 
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.Headers;
 import retrofit2.http.Query;
 
 public interface MyApi {

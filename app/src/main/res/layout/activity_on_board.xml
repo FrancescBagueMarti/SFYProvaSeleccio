@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient"
+    tools:context=".OnBoardActivity">
+    
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/puntos">
+        
+    </androidx.viewpager.widget.ViewPager>
+    
+    <Button
+        android:id="@+id/btnBoardBack"
+        android:backgroundTint="@color/silver"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        android:text="Atras"/>
+
+    <Button
+        android:id="@+id/btnBoardNext"
+        android:backgroundTint="@color/silver"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:text="Siguiente"/>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/puntos"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>
