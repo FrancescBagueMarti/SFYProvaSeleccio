@@ -12,8 +12,4 @@ public class FlowerUrl implements Serializable {
     public String getRegular() {
         return regular;
     }
-
-    public void setRegular(String regular) {
-        this.regular = regular;
-    }
 }

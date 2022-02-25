@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
+import com.example.sfy_provaseleccio.adapters.FlowerAdapter;
 import com.example.sfy_provaseleccio.api.MyApi;
 import com.example.sfy_provaseleccio.models.Flower;
 import com.example.sfy_provaseleccio.models.FlowerList;
@@ -58,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     public void searchFlowers(String query) {
+        final Context context = this;
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -65,18 +69,17 @@ public class MainActivity extends AppCompatActivity {
 
         MyApi flowerApi  = retrofit.create(MyApi.class);
 
-        Call<FlowerList> flowersCall = flowerApi.searchImages(query, MainActivity.ACCESS_KEY);
-        flowersCall.enqueue(new Callback<FlowerList>() {
+        Call<FlowerList> call = flowerApi.searchImages(query, ACCESS_KEY);
+        //HttpUrl url = call.request().url();
+        call.enqueue(new Callback<FlowerList>() {
             @Override
             public void onResponse(Call<FlowerList> call, Response<FlowerList> response) {
-                if (response.isSuccessful()) {
-                    updateFlowersData(response.body().getResults());
-                }
+                updateFlowersData(response.body().getResults());
             }
 
             @Override
             public void onFailure(Call<FlowerList> call, Throwable t) {
-
+                Toast.makeText(context, "Flower load Failes", Toast.LENGTH_SHORT).show();
             }
         });
     }

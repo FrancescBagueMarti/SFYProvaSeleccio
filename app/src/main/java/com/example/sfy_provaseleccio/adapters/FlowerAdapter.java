@@ -1,4 +1,4 @@
-package com.example.sfy_provaseleccio;
+package com.example.sfy_provaseleccio.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.sfy_provaseleccio.R;
 import com.example.sfy_provaseleccio.models.Flower;
 import com.squareup.picasso.Picasso;
 

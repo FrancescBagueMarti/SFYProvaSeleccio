@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.sfy_provaseleccio.adapters.SliderAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 import org.jetbrains.annotations.NotNull;
@@ -30,25 +31,5 @@ public class OnBoardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_on_board);
 
 
-    }
-
-    private class SliderAdapter extends PagerAdapter {
-
-        private Context context;
-        private LayoutInflater layoutInflater;
-
-        public SliderAdapter(Context context) {
-            this.context = context;
-        }
-
-        @Override
-        public int getCount() {
-            return 0;
-        }
-
-        @Override
-        public boolean isViewFromObject(@NonNull @NotNull View view, @NonNull @NotNull Object object) {
-            return false;
-        }
     }
 }

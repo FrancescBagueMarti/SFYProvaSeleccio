@@ -13,8 +13,4 @@ public class FlowerList implements Serializable {
     public ArrayList<Flower> getResults() {
         return results;
     }
-
-    public void setResults(ArrayList<Flower> results) {
-        this.results = results;
-    }
 }
