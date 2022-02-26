@@ -1,47 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient"
-    tools:context=".OnBoardActivity">
-    
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/puntos">
-        
-    </androidx.viewpager.widget.ViewPager>
-    
-    <Button
-        android:id="@+id/btnBoardBack"
-        android:backgroundTint="@color/silver"
-        android:textColor="@color/black"
+    android:gravity="center"
+    android:weightSum="3"
+    android:orientation="vertical">
+
+    <Space
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:visibility="gone"
-        android:text="Atras"/>
+        android:layout_weight="1"/>
 
-    <Button
-        android:id="@+id/btnBoardNext"
-        android:backgroundTint="@color/silver"
-        android:textColor="@color/black"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:text="Siguiente"/>
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_weight="1">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/puntos"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        app:tabGravity="center"
-        app:tabIndicatorHeight="0dp"
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp"
+            android:src="@drawable/unsplash"
+            />
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:gravity="center_horizontal"
+            android:text=" Access a list of flower images using the unsplash API "
+            />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_vertical">
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/btnStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start"
+            android:textColor="@color/purple_500"
+            android:backgroundTint="@color/silver"/>
+
+    </LinearLayout>
+
+</LinearLayout>
